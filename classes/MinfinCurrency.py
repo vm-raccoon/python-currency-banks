@@ -42,11 +42,14 @@ class MinfinCurrency:
             .replace("[DATE]", date)
 
     def __parseTableRows(self, table, banks):
+        temp = {}
         rows = []
         for row in table.find("tbody > tr"):
             row = self.__parseTableRow(row)
             if row["bank_id"] in banks:
-                rows.append(row)
+                temp[row["bank_id"]] = row
+        for bank in banks:
+            rows.append(temp[bank])
         return rows
 
     def __parseTableRow(self, row):
