@@ -1,7 +1,6 @@
 {
-    "currency": {
-        "uri": "https://minfin.com.ua/currency/banks/[CURRENCY]/[DATE]"
-    },
+    "currencies": [],
+    "banks": [],
     "telegram": {
         "bot-token": "BOT-TOKEN",
         "chat_id": -1234567890
