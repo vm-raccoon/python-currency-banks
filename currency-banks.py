@@ -11,10 +11,12 @@ bot = TelegramBot(config["telegram"]["bot-token"])
 
 for c in config["currencies"]:
     results = currency.getCurrencyValues(c, config["banks"])
+    inserted = False
     for (index, val) in enumerate(results["values"]):
         lastRow = db.getLastRow(val["bank_id"], c) or {}
         if not lastRow or lastRow and lastRow["datetime"] != val["updated"]:
             db.insertRow(val["bank_id"], c, val["bid"], val["ask"], val["updated"])
+            inserted = True
         for i in ["bid", "ask"]:
             diff = (val[i] - lastRow[i]) if lastRow else 0
             if diff == 0:
@@ -22,4 +24,5 @@ for c in config["currencies"]:
             else:
                 val[f"{i}_icon"] = "up" if diff > 0 else "down"
         results["values"][index] = val
-    bot.sendMessage(config["telegram"]["chat_id"], results)
+    if inserted:
+        bot.sendMessage(config["telegram"]["chat_id"], results)
