@@ -4,5 +4,6 @@
     "telegram": {
         "bot-token": "BOT-TOKEN",
         "chat_id": -1234567890
-    }
+    },
+    "sqlite": "default-database"
 }
